@@ -86,7 +86,9 @@ curl_close($ch);
                                         <?php endforeach ?>
                                     </ul>
                                 </td>
-                                <td><a href="<?php echo $event->Venue->Url ?>"><?php echo $event->Venue->Name ?></a></td>
+                                <td>
+                                    <?php echo (empty($event->Venue->Url)) ? $event->Venue->Name : "<a href=" . $event->Venue->Url . ">" . $event->Venue->Name . "</a>"; ?>
+                                </td>
                                 <td>
                                     <?php
                                         $date = new DateTime($event->Date);
@@ -97,14 +99,12 @@ curl_close($ch);
                                     <?php
                                         $time = new DateTime($event->Date);
                                         $time = $time->format("H:i");
-                                        if ($time === "00:00") {
-                                            echo "Check venue for time.";
-                                        } else {
-                                            echo $time;
-                                        }
+                                        echo ($time === "00:00") ? "Check venue for time" : $time;
                                     ?>
                                 </td>
-                                <td><a href="<?php echo $event->TicketUrl ?>">Buy Tickets</a></td>
+                                <td>
+                                    <?php echo (empty($event->TicketUrl)) ? "No ticket link available." : "<a href=" . $event->TicketUrl . ">Ticket Link</a>"; ?>
+                                </td>
                             </tr>
                         <?php endforeach ?>
                 </table>
